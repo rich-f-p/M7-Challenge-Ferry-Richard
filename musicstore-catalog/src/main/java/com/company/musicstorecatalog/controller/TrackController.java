@@ -38,10 +38,10 @@ public class TrackController {
         return repo.save(track);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateTrack(@RequestBody @Valid Track track){
-        if(repo.findById(track.getId()).isPresent())
+    public void updateTrack(@RequestBody @Valid Track track, @PathVariable Integer id){
+        if(track.getId()>0 && track.getId().equals(id))
             repo.save(track);
         else throw new IllegalArgumentException("updateFailed: no track with this id");
     }

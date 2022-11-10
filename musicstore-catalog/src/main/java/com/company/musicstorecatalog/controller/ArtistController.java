@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/artist")
+@RequestMapping("/artists")
 public class ArtistController {
     @Autowired
     ArtistRepository repo;
@@ -37,10 +37,10 @@ public class ArtistController {
         return repo.save(artist);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateArtist(@RequestBody @Valid Artist artist){
-        if(repo.findById(artist.getId()).isPresent())
+    public void updateArtist(@RequestBody @Valid Artist artist, @PathVariable Integer id){
+        if(artist.getId()>0 && artist.getId().equals(id))
             repo.save(artist);
         else throw new IllegalArgumentException("updateFailed: no artist with this id");
     }

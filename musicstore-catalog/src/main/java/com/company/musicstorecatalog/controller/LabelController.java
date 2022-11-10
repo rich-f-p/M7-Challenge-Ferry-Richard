@@ -37,14 +37,15 @@ public class LabelController {
         return repo.save(label);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateLabel(@RequestBody @Valid Label label){
-        if(repo.findById(label.getId()).isPresent())
+    public void updateLabel(@RequestBody @Valid Label label, @PathVariable Integer id){
+        if(label.getId()>0 && label.getId().equals(id))
             repo.save(label);
         else throw new IllegalArgumentException("updateFailed: no label with thid id");
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Integer id){
         repo.deleteById(id);
     }

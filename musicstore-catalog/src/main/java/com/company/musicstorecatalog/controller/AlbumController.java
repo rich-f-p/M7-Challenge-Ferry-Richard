@@ -37,15 +37,16 @@ public class AlbumController {
         return repo.save(album);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAlbum(@RequestBody @Valid Album album){
-        if(repo.findById(album.getId()).isPresent())
+    public void updateAlbum(@RequestBody @Valid Album album, @PathVariable Integer id){
+        if(album.getId()>0 && album.getId().equals(id))
             repo.save(album);
         else throw new IllegalArgumentException("updateFailed: no album with this id");
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Integer id ){
         repo.deleteById(id);
     }
